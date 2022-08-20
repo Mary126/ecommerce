@@ -56,12 +56,12 @@ class _ProductScreen extends State<ProductScreen> {
                       });
                     },
                     child: Container(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.only(top: 10, bottom: 10, left: 15, right: 15),
                       decoration: BoxDecoration(
                         borderRadius: const BorderRadius.all(Radius.circular(5)),
                         color: ColorConstant.blueColor,
                       ),
-                      child: const Icon(Icons.arrow_back_ios, color: Colors.white,),
+                      child: Image.asset("assets/images/arrow_left.png"),
                     ),
                   ),
                   Text("Product Detailes", style: TextStyle(color: ColorConstant.blueColor, fontSize: 18),),
@@ -290,7 +290,7 @@ class _ProductScreen extends State<ProductScreen> {
                               color: ColorConstant.orangeColor,
                               borderRadius: const BorderRadius.all(Radius.circular(5)),
                             ),
-                            padding: EdgeInsets.all(15),
+                            padding: const EdgeInsets.all(15),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [

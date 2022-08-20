@@ -373,7 +373,17 @@ class MainScreenState extends State<MainScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     const Text("Explorer", style: TextStyle(color: Colors.white),),
-                    Image.asset('assets/images/cart.png'),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/cart_screen");
+                      },
+                      style: TextButton.styleFrom(
+                        minimumSize: Size.zero,
+                        padding: EdgeInsets.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      child: Image.asset('assets/images/cart.png'),
+                    ),
                     Image.asset('assets/images/heart_white.png'),
                     Image.asset('assets/images/user.png')
                   ],

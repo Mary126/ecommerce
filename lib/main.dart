@@ -1,3 +1,4 @@
+import 'package:ecommerce/pages/cart_screen.dart';
 import 'package:ecommerce/pages/product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce/pages/main_screen.dart';
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
       title: 'ECommerce',
       routes: {
         '/': (context) => const MainScreen(),
-        '/product_screen': (context) => const ProductScreen()
+        '/product_screen': (context) => const ProductScreen(),
+        '/cart_screen': (context) => const CartScreen()
       },
       initialRoute: '/',
     );
