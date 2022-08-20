@@ -4,12 +4,10 @@ class Category {
   bool isSelected = false;
   Category(this.name, this.assetPath, this.isSelected);
 }
-class HotSale {
-  int id = 0;
-  String title = "";
-  String subtitle = "";
-  String picture = "";
-  HotSale(this.id, this.title, this.subtitle, this.picture);
+class ProductInfo {
+  String name = "";
+  bool isSelected = false;
+  ProductInfo(this.name, this.isSelected);
 }
 class FilterSelectionModel {
   String name = "";

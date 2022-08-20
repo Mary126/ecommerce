@@ -34,6 +34,169 @@ class MainScreenState extends State<MainScreen> {
     Category("Health", "assets/images/health.png", false),
     Category("Books", "assets/images/books.png", false),
   ];
+  Widget selectCategory() {
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(left: 15, right: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("Select Category", style: TextStyles.heavyMarkPro),
+              TextButton(
+                  onPressed: () {
+
+                  },
+                  child: Text(
+                    "view all",
+                    style: TextStyle(color: ColorConstant.orangeColor),
+                  )
+              )
+            ],
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            for (int i = 0; i < categories.length; i++)
+              TextButton(
+                  onPressed: () {
+                    changeCategory(i);
+                  },
+                  child: Column(
+                    children: [
+                      Stack(
+                        children: [
+                          Container(
+                            width: 80,
+                            height: 80,
+                            decoration: BoxDecoration(
+                              color: categories[i].isSelected ? ColorConstant.orangeColor : Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          Positioned.fill(
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Image.asset(
+                                  categories[i].assetPath,
+                                ),
+                              )
+                          )
+                        ],
+                      ),
+                      Text(categories[i].name, style: TextStyle(
+                          color: categories[i].isSelected ? ColorConstant.orangeColor : Colors.black
+                      ),),
+                    ],
+                  )
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+  Widget hotSalesWidget() {
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(left: 15, right: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("Hot Sales", style: TextStyles.heavyMarkPro),
+              TextButton(
+                  onPressed: () {
+
+                  },
+                  child: Text(
+                    "see more",
+                    style: TextStyle(color: ColorConstant.orangeColor),
+                  )
+              )
+            ],
+          ),
+        ),
+        Container(
+            margin: const EdgeInsets.only(left: 15, right: 15),
+            height: 200,
+            child: FutureBuilder<List>(
+                future: hotSales,
+                builder: (context, snapshot) {
+                  return snapshot.hasData ? PageView.builder(
+                      itemCount: snapshot.data?.length,
+                      pageSnapping: true,
+                      onPageChanged: (page) {
+                        setState(() {
+                          currentHotSale = page;
+                        });
+                      },
+                      itemBuilder: (context, pagePosition) {
+                        return Container(
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.all(Radius.circular(10)),
+                              image: DecorationImage(
+                                image: NetworkImage(snapshot.data![pagePosition]['picture']),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            child: Container(
+                              padding: const EdgeInsets.only(left: 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  (snapshot.data![pagePosition]['is_new'] != null && snapshot.data![pagePosition]['is_new'] == true) ? Container(
+                                      width: 40,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        color: ColorConstant.orangeColor,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        child: const Text(
+                                          "New", style: TextStyle(color: Colors.white),
+                                        ),
+                                      )
+                                  ) : Container(),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(snapshot.data![pagePosition]['title'], style: const TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w700),),
+                                      Text(snapshot.data![pagePosition]['subtitle'], style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w400),)
+                                    ],
+                                  ),
+                                  TextButton(
+                                      onPressed: () {
+
+                                      },
+                                      child: Container(
+                                          width: 120,
+                                          height: 30,
+                                          decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                                            color: Colors.white,
+                                          ),
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            child: const Text("Buy now!", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),),
+                                          )
+                                      )
+                                  ),
+
+                                ],
+                              ),
+                            )
+                        );
+                      }
+                  ) : Container();
+                }
+            )
+        ),
+      ],
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -82,163 +245,11 @@ class MainScreenState extends State<MainScreen> {
                     ),
                   ),
                   SliverToBoxAdapter(
-                    child: Container(
-                      margin: const EdgeInsets.only(left: 15, right: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Select Category", style: TextStyles.heavyMarkPro),
-                          TextButton(
-                              onPressed: () {
-
-                              },
-                              child: Text(
-                                "view all",
-                                style: TextStyle(color: ColorConstant.orangeColor),
-                              )
-                          )
-                        ],
-                      ),
-                    ),
+                    child: selectCategory(),
                   ),
-                  SliverToBoxAdapter(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        for (int i = 0; i < categories.length; i++)
-                          TextButton(
-                              onPressed: () {
-                                changeCategory(i);
-                              },
-                              child: Column(
-                                children: [
-                                  Stack(
-                                    children: [
-                                      Container(
-                                        width: 80,
-                                        height: 80,
-                                        decoration: BoxDecoration(
-                                          color: categories[i].isSelected ? ColorConstant.orangeColor : Colors.white,
-                                          shape: BoxShape.circle,
-                                        ),
-                                      ),
-                                      Positioned.fill(
-                                          child: Align(
-                                            alignment: Alignment.center,
-                                            child: Image.asset(
-                                              categories[i].assetPath,
-                                            ),
-                                          )
-                                      )
-                                    ],
-                                  ),
-                                  Text(categories[i].name, style: TextStyle(
-                                      color: categories[i].isSelected ? ColorConstant.orangeColor : Colors.black
-                                  ),),
-                                ],
-                              )
-                          ),
-                      ],
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Container(
-                      margin: const EdgeInsets.only(left: 15, right: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Hot Sales", style: TextStyles.heavyMarkPro),
-                          TextButton(
-                              onPressed: () {
 
-                              },
-                              child: Text(
-                                "see more",
-                                style: TextStyle(color: ColorConstant.orangeColor),
-                              )
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
                   SliverToBoxAdapter(
-                    child: Container(
-                        margin: const EdgeInsets.only(left: 15, right: 15),
-                        height: 200,
-                        child: FutureBuilder<List>(
-                            future: hotSales,
-                            builder: (context, snapshot) {
-                              return snapshot.hasData ? PageView.builder(
-                                  itemCount: snapshot.data?.length,
-                                  pageSnapping: true,
-                                  onPageChanged: (page) {
-                                    setState(() {
-                                      currentHotSale = page;
-                                    });
-                                  },
-                                  itemBuilder: (context, pagePosition) {
-                                    return Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                          image: DecorationImage(
-                                            image: NetworkImage(snapshot.data![pagePosition]['picture']),
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        child: Container(
-                                          padding: const EdgeInsets.only(left: 20),
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                            children: [
-                                              (snapshot.data![pagePosition]['is_new'] != null && snapshot.data![pagePosition]['is_new'] == true) ? Container(
-                                                  width: 40,
-                                                  height: 40,
-                                                  decoration: BoxDecoration(
-                                                    color: ColorConstant.orangeColor,
-                                                    shape: BoxShape.circle,
-                                                  ),
-                                                  child: Container(
-                                                    alignment: Alignment.center,
-                                                    child: const Text(
-                                                      "New", style: TextStyle(color: Colors.white),
-                                                    ),
-                                                  )
-                                              ) : Container(),
-                                              Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(snapshot.data![pagePosition]['title'], style: const TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w700),),
-                                                  Text(snapshot.data![pagePosition]['subtitle'], style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w400),)
-                                                ],
-                                              ),
-                                              TextButton(
-                                                  onPressed: () {
-
-                                                  },
-                                                  child: Container(
-                                                      width: 120,
-                                                      height: 30,
-                                                      decoration: const BoxDecoration(
-                                                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                                                        color: Colors.white,
-                                                      ),
-                                                      child: Container(
-                                                        alignment: Alignment.center,
-                                                        child: const Text("Buy now!", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),),
-                                                      )
-                                                  )
-                                              ),
-
-                                            ],
-                                          ),
-                                        )
-                                    );
-                                  }
-                              ) : Container();
-                            }
-                        )
-                    ),
+                    child: hotSalesWidget(),
                   ),
                   SliverToBoxAdapter(
                     child: Container(
@@ -261,7 +272,7 @@ class MainScreenState extends State<MainScreen> {
                     ),
                   ),
                   SliverPadding(
-                    padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
+                    padding: const EdgeInsets.only(left: 15, right: 15, bottom: 40),
                     sliver: FutureBuilder<List>(
                       future: bestSeller,
                       builder: (context, snapshot) {
@@ -346,6 +357,28 @@ class MainScreenState extends State<MainScreen> {
                     ),
                   ),
                 ]
+            ),
+            Positioned(
+              bottom: 0,
+              right: 0,
+              left: 0,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: ColorConstant.blueColor,
+                  borderRadius: const BorderRadius.all(Radius.circular(15)),
+                ),
+                width: double.infinity,
+                padding: const EdgeInsets.all(15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    const Text("Explorer", style: TextStyle(color: Colors.white),),
+                    Image.asset('assets/images/cart.png'),
+                    Image.asset('assets/images/heart_white.png'),
+                    Image.asset('assets/images/user.png')
+                  ],
+                ),
+              ),
             ),
             showFilters ? FilterScreen(onChanged: _handleFilterScreen) : Container(),
           ],

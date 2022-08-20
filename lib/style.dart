@@ -5,6 +5,7 @@ class ColorConstant {
   static Color orangeColor = const Color.fromRGBO(255, 110, 78, 1.0);
   static Color blueColor = const Color.fromRGBO(1, 0, 53, 1);
   static Color grayColor = const Color.fromRGBO(204, 204, 204, 1);
+  static Color grayColor2 = const Color.fromRGBO(183, 183, 183, 1);
 }
 
 class TextStyles {
