@@ -8,5 +8,5 @@ class ColorConstant {
 }
 
 class TextStyles {
-  static TextStyle heavyMarkPro = const TextStyle(fontWeight: FontWeight.w800, letterSpacing: 0.33, fontSize: 25);
+  static TextStyle heavyMarkPro = const TextStyle(fontWeight: FontWeight.w800, letterSpacing: 0.33, fontSize: 25, color: Colors.black);
 }

@@ -279,30 +279,35 @@ class MainScreenState extends State<MainScreen> {
                                   ),
                                   child: Stack(
                                     children: [
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Expanded(
-                                            child: Image.network(snapshot.data![index]['picture'], fit: BoxFit.fitHeight,),
-                                          ),
-                                          Container(
-                                            margin: const EdgeInsets.only(left: 15, right: 15, bottom: 10),
-                                            child:  Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pushNamed(context, '/product_screen');
+                                          },
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Expanded(
+                                                child: Image.network(snapshot.data![index]['picture'], fit: BoxFit.fitHeight,),
+                                              ),
+                                              Container(
+                                                margin: const EdgeInsets.only(left: 15, right: 15, bottom: 10),
+                                                child:  Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    Text("\$${snapshot.data![index]['price_without_discount']}", style: TextStyles.heavyMarkPro,),
-                                                    Text("\$${snapshot.data![index]['discount_price']}", style: TextStyle(
-                                                        color: ColorConstant.grayColor, fontWeight: FontWeight.w500, decoration: TextDecoration.lineThrough
-                                                    ),)
+                                                    Row(
+                                                      children: [
+                                                        Text("\$${snapshot.data![index]['price_without_discount']}", style: TextStyles.heavyMarkPro,),
+                                                        Text("\$${snapshot.data![index]['discount_price']}", style: TextStyle(
+                                                            color: ColorConstant.grayColor, fontWeight: FontWeight.w500, decoration: TextDecoration.lineThrough
+                                                        ),)
+                                                      ],
+                                                    ),
+                                                    Text(snapshot.data![index]['title'].toString(), style: const TextStyle(fontSize: 10,  color: Colors.black),),
                                                   ],
                                                 ),
-                                                Text(snapshot.data![index]['title'].toString(), style: const TextStyle(fontSize: 10),),
-                                              ],
-                                            ),
-                                          )
-                                        ],
+                                              )
+                                            ],
+                                          ),
                                       ),
                                       Positioned.fill(
                                           child: Align(
@@ -362,12 +367,8 @@ class MainScreenState extends State<MainScreen> {
     final response = await http
         .get(Uri.parse('https://run.mocky.io/v3/654bd15e-b121-49ba-a588-960956b15175'));
     if (response.statusCode == 200) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
       return jsonDecode(response.body)['home_store'];
     } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
       throw Exception('Failed to load');
     }
   }
@@ -375,12 +376,8 @@ class MainScreenState extends State<MainScreen> {
     final response = await http
         .get(Uri.parse('https://run.mocky.io/v3/654bd15e-b121-49ba-a588-960956b15175'));
     if (response.statusCode == 200) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
       return jsonDecode(response.body)['best_seller'];
     } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
       throw Exception('Failed to load');
     }
   }
