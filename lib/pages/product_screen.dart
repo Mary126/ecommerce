@@ -275,32 +275,22 @@ class _ProductScreen extends State<ProductScreen> {
                             ],
                           ),
                         ),
-
-                        TextButton(
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(ColorConstant.orangeColor),
+                            padding: MaterialStateProperty.all(const EdgeInsets.only(top: 10, bottom: 10, right: 15, left: 15))
+                          ),
                           onPressed: () {
 
                           },
-                          style: TextButton.styleFrom(
-                            minimumSize: Size.zero,
-                            padding: EdgeInsets.zero,
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          ),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: ColorConstant.orangeColor,
-                              borderRadius: const BorderRadius.all(Radius.circular(5)),
-                            ),
-                            padding: const EdgeInsets.all(15),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                const Text("Add to Cart", style: TextStyle(color: Colors.white, fontSize: 20),),
-                                Text("\$${snapshot.data!["price"]}", style: const TextStyle(color: Colors.white, fontSize: 20),)
-                              ],
-                            )
-                          ),
-                        )
-
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              const Text("Add to Cart", style: TextStyle(color: Colors.white, fontSize: 20),),
+                              Text("\$${snapshot.data!["price"]}", style: const TextStyle(color: Colors.white, fontSize: 20),)
+                            ],
+                          )
+                        ),
                       ],
                     ),
                   ): Container();

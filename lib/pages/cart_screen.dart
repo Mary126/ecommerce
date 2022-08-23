@@ -101,35 +101,38 @@ class _CartScreen extends State<CartScreen> {
                       )
                     ),
                     const Divider(color: Colors.white,),
-                    FutureBuilder<Map<String, dynamic>>(
-                        future: cart,
-                        builder: (context, snapshot) {
-                          return snapshot.hasData ? Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
-                                  Padding(
-                                    padding: EdgeInsets.only(top:10, bottom: 10),
-                                    child: Text("Total", style: TextStyle(color: Colors.white, fontSize: 15),),
-                                  ),
-                                  Text("Delivery", style: TextStyle(color: Colors.white, fontSize: 15),),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const  EdgeInsets.only(top:10, bottom: 10),
-                                    child: Text("\$${snapshot.data!['total'].toString()} us", style: const TextStyle(color: Colors.white, fontSize: 15),),
-                                  ),
-                                  Text(snapshot.data!['delivery'].toString(), style: const TextStyle(color: Colors.white, fontSize: 15),)
-                                ],
-                              )
-                            ],
-                          ) : Container();
-                        }
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: FutureBuilder<Map<String, dynamic>>(
+                          future: cart,
+                          builder: (context, snapshot) {
+                            return snapshot.hasData ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: const [
+                                    Padding(
+                                      padding: EdgeInsets.only(top:10, bottom: 10),
+                                      child: Text("Total", style: TextStyle(color: Colors.white, fontSize: 15),),
+                                    ),
+                                    Text("Delivery", style: TextStyle(color: Colors.white, fontSize: 15),),
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const  EdgeInsets.only(top:10, bottom: 10),
+                                      child: Text("\$${snapshot.data!['total'].toString()} us", style: const TextStyle(color: Colors.white, fontSize: 15),),
+                                    ),
+                                    Text(snapshot.data!['delivery'].toString(), style: const TextStyle(color: Colors.white, fontSize: 15),)
+                                  ],
+                                )
+                              ],
+                            ) : Container();
+                          }
+                      ),
                     ),
                     const Divider(color: Colors.white),
                     Padding(
@@ -165,8 +168,8 @@ class _CartScreen extends State<CartScreen> {
           Row(
             children: [
               SizedBox(
-                  height: 60,
-                  width: 60,
+                  height: 65,
+                  width: 65,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
                     child: Image.network(
@@ -199,7 +202,7 @@ class _CartScreen extends State<CartScreen> {
                 child: Column(
                   children: const[
                     Icon(Icons.remove, color: Colors.white, size: 15),
-                    Text("2", style: TextStyle(color: Colors.white),),
+                    Text("1", style: TextStyle(color: Colors.white),),
                     Icon(Icons.add, color: Colors.white, size: 15,),
                   ],
                 ),

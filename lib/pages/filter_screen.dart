@@ -21,6 +21,61 @@ class _FilterScreen extends State<FilterScreen> {
   late FilterSelectionModel currentBrand;
   late FilterSelectionModel currentPrice;
   late FilterSelectionModel currentSize;
+
+  Widget dropdownWidget(String name) {
+    return Container(
+      margin: const EdgeInsets.only(top: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 5),
+            child: Text(name, style: TextStyle(color: ColorConstant.blueColor, fontSize: 18),),
+          ),
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(5)),
+              border: Border.all(color: Colors.grey),
+            ),
+            padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+            child: DropdownButton<FilterSelectionModel>(
+              isDense: true,
+              value: (name == "Brand") ? currentBrand : (name == "Price") ? currentPrice : currentSize,
+              items: (name == "Brand") ? filterSelections.brandDropdown.map((FilterSelectionModel i) {
+                return DropdownMenuItem<FilterSelectionModel>(
+                  value: i,
+                  child: Text(i.name),
+                );
+              }).toList() : (name == "Price") ? filterSelections.priceDropdown.map((FilterSelectionModel i) {
+                return DropdownMenuItem<FilterSelectionModel>(
+                  value: i,
+                  child: Text(i.name),
+                );
+              }).toList() : filterSelections.sizeDropdown.map((FilterSelectionModel i) {
+                return DropdownMenuItem<FilterSelectionModel>(
+                  value: i,
+                  child: Text(i.name),
+                );
+              }).toList(),
+              onChanged: (FilterSelectionModel? newValue) {
+                setState(() {
+                  switch (name) {
+                    case "Brand": currentBrand = newValue!; break;
+                    case "Price": currentPrice = newValue!; break;
+                    case "Size": currentSize = newValue!; break;
+                  }
+                });
+              },
+              icon: const Icon(Icons.keyboard_arrow_down),
+              isExpanded: true,
+              underline: Container(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
   @override
   void initState()
   {
@@ -66,6 +121,7 @@ class _FilterScreen extends State<FilterScreen> {
                             borderRadius: const BorderRadius.all(Radius.circular(5)),
                             color: ColorConstant.blueColor,
                           ),
+                          padding: const EdgeInsets.all(5),
                           child: const Icon(Icons.close, color: Colors.white,),
                         ),
                       ),
@@ -86,89 +142,14 @@ class _FilterScreen extends State<FilterScreen> {
                     ],
                   ),
                   Container(
-                    margin: const EdgeInsets.all(30),
+                    margin: const EdgeInsets.only(left: 30, right: 30, bottom: 30, top: 10),
                     width: double.infinity,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Brand", style: TextStyle(color: ColorConstant.blueColor, fontSize: 18),),
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(5)),
-                            border: Border.all(color: Colors.grey),
-                          ),
-                          padding: const EdgeInsets.only(left: 5, right: 5),
-                          child: DropdownButton<FilterSelectionModel>(
-                            value: currentBrand,
-                            items: filterSelections.brandDropdown.map((FilterSelectionModel i) {
-                              return DropdownMenuItem<FilterSelectionModel>(
-                                value: i,
-                                child: Text(i.name),
-                              );
-                            }).toList(),
-                            onChanged: (FilterSelectionModel? newValue) {
-                              setState(() {
-                                currentBrand = newValue!;
-                              });
-                            },
-                            icon: const Icon(Icons.keyboard_arrow_down),
-                            isExpanded: true,
-                            underline: Container(),
-                          ),
-                        ),
-                        Text("Price", style: TextStyle(color: ColorConstant.blueColor, fontSize: 18)),
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(5)),
-                            border: Border.all(color: Colors.grey),
-                          ),
-                          padding: const EdgeInsets.only(left: 5, right: 5),
-                          child: DropdownButton<FilterSelectionModel>(
-                            value: currentPrice,
-                            items: filterSelections.priceDropdown.map((FilterSelectionModel i) {
-                              return DropdownMenuItem<FilterSelectionModel>(
-                                value: i,
-                                child: Text(i.name),
-                              );
-                            }).toList(),
-                            onChanged: (FilterSelectionModel? newValue) {
-                              setState(() {
-                                currentPrice = newValue!;
-                              });
-                            },
-                            icon: const Icon(Icons.keyboard_arrow_down),
-                            isExpanded: true,
-                            underline: Container(),
-                          ),
-                        ),
-                        Text("Size", style: TextStyle(color: ColorConstant.blueColor, fontSize: 18)),
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(5)),
-                            border: Border.all(color: Colors.grey),
-                          ),
-                          padding: const EdgeInsets.only(left: 5, right: 5),
-                          child: DropdownButton<FilterSelectionModel>(
-                            value: currentSize,
-                            items: filterSelections.sizeDropdown.map((FilterSelectionModel i) {
-                              return DropdownMenuItem<FilterSelectionModel>(
-                                value: i,
-                                child: Text(i.name),
-                              );
-                            }).toList(),
-                            onChanged: (FilterSelectionModel? newValue) {
-                              setState(() {
-                                currentSize = newValue!;
-                              });
-                            },
-                            icon: const Icon(Icons.keyboard_arrow_down),
-                            isExpanded: true,
-                            underline: Container(),
-                          ),
-                        ),
+                        dropdownWidget("Brand"),
+                        dropdownWidget("Price"),
+                        dropdownWidget("Size"),
                       ],
                     ),
                   )

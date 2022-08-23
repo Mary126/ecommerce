@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:ecommerce/style.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:ecommerce/constants.dart';
 import 'package:ecommerce/pages/filter_screen.dart';
@@ -197,6 +198,42 @@ class MainScreenState extends State<MainScreen> {
       ],
     );
   }
+  Widget searchBar() {
+    return Container(
+      margin: const EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Container(
+            width: 300,
+            padding: const EdgeInsets.only(left: 20),
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              color: Colors.white,
+            ),
+            child: TextField(
+              style: const TextStyle(fontSize: 12),
+              decoration: InputDecoration(
+                hintText: "Search",
+                icon: Image.asset("assets/images/search_orange.png"),
+                border: InputBorder.none,
+                isDense: true,
+              ),
+            ),
+          ),
+          Container(
+            width: 32,
+            height: 32,
+            decoration: BoxDecoration(
+              color: ColorConstant.orangeColor,
+              shape: BoxShape.circle,
+            ),
+            child: Image.asset("assets/images/qr_code.png"),
+          ),
+        ],
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -232,7 +269,7 @@ class MainScreenState extends State<MainScreen> {
                             },
                             style: TextButton.styleFrom(
                               minimumSize: Size.zero,
-                              padding: EdgeInsets.zero,
+                              padding: const EdgeInsets.all(5),
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
                             child: Container(
@@ -247,7 +284,9 @@ class MainScreenState extends State<MainScreen> {
                   SliverToBoxAdapter(
                     child: selectCategory(),
                   ),
-
+                  SliverToBoxAdapter(
+                    child: searchBar(),
+                  ),
                   SliverToBoxAdapter(
                     child: hotSalesWidget(),
                   ),
@@ -279,7 +318,7 @@ class MainScreenState extends State<MainScreen> {
                         return snapshot.hasData ? SliverGrid(
                             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              childAspectRatio: 1.0,
+                              childAspectRatio: 0.8,
                             ),
                             delegate: SliverChildBuilderDelegate((context, index) {
                               return Container(
@@ -298,7 +337,7 @@ class MainScreenState extends State<MainScreen> {
                                             crossAxisAlignment: CrossAxisAlignment.center,
                                             children: [
                                               Expanded(
-                                                child: Image.network(snapshot.data![index]['picture'], fit: BoxFit.fitHeight,),
+                                                child: Image.network(snapshot.data![index]['picture'], fit: BoxFit.fitHeight, height: 150,),
                                               ),
                                               Container(
                                                 margin: const EdgeInsets.only(left: 15, right: 15, bottom: 10),
